@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Spiro Stilianoudakis, Mikhail Dozmorov" />
+    <link rel="stylesheet" href="css\xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css\xaringan-my.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution
+## #bioc2020 workshop
+### Spiro Stilianoudakis, Mikhail Dozmorov
+### Virginia Commonwealth University
+### ???
+
+---
+
+&lt;!-- layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;img src="img/logo_bioconductor.gif"&gt;
+&lt;/div&gt;
+
+--- --&gt;
+
+
+
+## preciseTADworkshop resources
+
+- [The slides](???)
+
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
+
+- [Docker image](???)
+
+- [Pkgdown website](???)
+
+- Start this workshop at [http://workshop.bioc.cancerdatasci.org/](http://workshop.bioc.cancerdatasci.org/)
+    - Username: ???
+    - Password: ???
+    - `help(package = "???preciseTAD")`
+
+---
+
+## The 3D structure of the genome
+
+- .small[ Human genome is big - ~3.2 billion base pairs ]
+- .small[ Chromosome structure and function is organized at multiple scales ]
+- .small[ At kilobase (kb) scale chromatin loops form regions that are highly self-interacting called Topologically Associated Domains (TADs) ]
+
+.center[&lt;img src="img/3d_chromatin.png" width = 700&gt;]
+---
+
+## Chromosome conformation capture technologies
+
+The core strategy in 3D genome mapping is nuclear **proximity ligation** (Cullen et al., 1993), which allows detection of distant genomic segments residing in close spatial proximity to one another, yet are linearly far away.
+
+.center[&lt;img src="img/proximity_ligation.png" width = 650&gt;]
+
+.small[ Lieberman-Aiden, Erez, Nynke L. van Berkum, Louise Williams, Maxim Imakaev, Tobias Ragoczy, Agnes Telling, Ido Amit, et al. “[Comprehensive Mapping of Long-Range Interactions Reveals Folding Principles of the Human Genome](https://doi.org/10.1126/science.1181369).” Science, 2009 ]
+---
+
+##Hi-C data as a matrix
+
+.pull-left[
+- The genome (chromosome) is split into equally sized regions controlled by sequencing depth (resolution)
+- Data is represented by a symmetric matrix of contacts `\(C_{ij}\)` where entry `\(ij\)` corresponds to the number of times region `\(i\)` comes into contact with region `\(j\)` (interaction frequency)
+- Power-law decay of interactions with increasing **distance**
+]
+
+.pull-right[
+&lt;img src="img/contact_matrix.png" width = 450&gt;
+]
+
+---
+
+## TAD-calling
+
+.pull-left[
+- “TAD-callers” have been proposed to identify the start and end coordinates of TAD boundaries
+- Heavily reliant on Hi-C data “resolution”
+- Ignore the fundamental role of functional genomic data (ChIP-seq data) in chromatin folding
+]
+
+.pull-right[
+&lt;img src="img/TAD_detection.png" width = 650&gt;
+]
+
+---
+
+## Why study TADs?
+
+- TADs are stable and dynamic structures 
+  + Highly conserved across species and cell lines
+  + Associated with gene regulation
+
+- Disruption of the boundaries that demarcate TADs has been shown to lead to rare diseases and even cancer
+
+- Understanding the mechanisms through which TADs are formed remains a top priority in our goal to fully understand the functionality of the human genome
+
+- Can we leverage functional genomic elements in order to more precisely identify TAD boundaries?
+
+---
+
+## Turning TAD calling into a supervised ML framework
+
+.pull-left[ 
+- Defining a resolution-specific response vector Y by shifted binning 
+]
+
+.pull-right[
+&lt;img src="img/response_vector.png" width = 650&gt;
+]
+
+---
+
+## Turning TAD calling into a supervised ML framework
+
+.pull-left[ 
+- Defining the feature space `\(\textbf{X} = \{X_1, X_2, \cdots, X_p \}\)`
+]
+
+.pull-right[
+&lt;img src="img/feature_space.png" width = 650&gt;
+]
+
+---
+
+## Establishing the Machine Learning Framework
+
+.center[&lt;img src="img/ml_framework.png" width = 600&gt;]
+
+---
+
+## Precisely predicting TAD boundaries at base-level resolution using *preciseTAD*
+
+What it does…
+  + Leverages a predictive model in conjunction with:
+  
+    - Density-based spatial clustering of applications with noise (DBSCAN)
+    - Partitioning around mediods (PAM)
+    
+  to precisely predict the most biologically meaningful chromosome-specific TAD boundaries
+
+---
+
+## Psuedocode
+
+.center[&lt;img src="img/psuedocode.png" width = 450&gt;]
+
+---
+
+## Evaluating precision of boundary prediction
+
+- Enriched heatmaps
+
+- Signal profile plots
+
+- Distance to nearest ChIP-seq peak region
+
+- Venn diagrams/Jaccard indices
+
+---
+
+## Summary
+
+- TAD boundary prediction is a multi-faceted problem
+
+- Current TAD-callers focus more on computational efficiency and less on precision
+
+- preciseTAD leverages an RF to more precisely predicts the location of TAD boundaries compared to conventional TAD-callers
+
+.small[
+Spiro C. Stilianoudakis, and Mikhail G. Dozmorov. “[preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution](https://doi.org/10.1101/2020.09.03.282186).” 
+]
+
+---
+
+## preciseTADworkshop resources
+
+- [The slides](???)
+
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
+
+- [Docker image](???)
+
+- [Pkgdown website](???)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
