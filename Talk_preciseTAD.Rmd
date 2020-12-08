@@ -1,9 +1,9 @@
 ---
 title: "preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution"
-subtitle: "#bioc2020 workshop"
-author: "Spiro Stilianoudakis, Mikhail Dozmorov"
+subtitle: "#EuroBioc2020 workshop"
+author: "Spiro Stilianoudakis, MA, Mikhail Dozmorov, PhD"
 institute: "Virginia Commonwealth University"
-date: "???"
+date: "December 6th, 2020"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -40,14 +40,9 @@ mono_light(
 
 - [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
 
-- [Docker image](???)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
 
-- [Pkgdown website](???)
-
-- Start this workshop at [http://workshop.bioc.cancerdatasci.org/](http://workshop.bioc.cancerdatasci.org/)
-    - Username: ???
-    - Password: ???
-    - `help(package = "???preciseTAD")`
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
 
 ---
 
@@ -191,6 +186,6 @@ Spiro C. Stilianoudakis, and Mikhail G. Dozmorov. “[preciseTAD: A machine lear
 
 - [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
 
-- [Docker image](???)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
 
-- [Pkgdown website](???)
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
