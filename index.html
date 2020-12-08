@@ -3,19 +3,19 @@
   <head>
     <title>preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Mikhail Dozmorov" />
-    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
-    <link rel="stylesheet" href="css/xaringan-my.css" type="text/css" />
+    <meta name="author" content="Spiro Stilianoudakis, MA, Mikhail Dozmorov, PhD" />
+    <link rel="stylesheet" href="css\xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css\xaringan-my.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
 # preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution
-## #bioc2020 workshop
-### Mikhail Dozmorov
+## #EuroBioc2020 workshop
+### Spiro Stilianoudakis, MA, Mikhail Dozmorov, PhD
 ### Virginia Commonwealth University
-### 2020-07-30, 10:00-10:55am ET
+### December 6th, 2020
 
 ---
 
@@ -29,30 +29,25 @@ class: center, middle, inverse, title-slide
 
 
 
-## HiCcompareWorkshop resources
+## preciseTADworkshop resources
 
-- These slides: [https://mdozmorov.github.io/Talk_HiCcompare](https://mdozmorov.github.io/Talk_HiCcompare)
+- [The slides](???)
 
-- GitHub repo: [https://github.com/mdozmorov/HiCcompareWorkshop](https://github.com/mdozmorov/HiCcompareWorkshop)
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
 
-- Docker image: [https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
 
-- Pkgdown website: [https://mdozmorov.github.io/HiCcompareWorkshop/](https://mdozmorov.github.io/HiCcompareWorkshop/)
-
-- Start this workshop at [http://workshop.bioc.cancerdatasci.org/](http://workshop.bioc.cancerdatasci.org/)
-    - Username: rstudio
-    - Password: welcome-to-bioc2020
-    - `help(package = "HiCcompareWorkshop")`
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
 
 ---
 
 ## The 3D structure of the genome
 
-- Human genome is big - ~3.2 billion base pairs
-- ~2 meters (~6ft) of DNA in one cell are packed into the `\(\sim10\mu m\)` nucleus
-- ~500 times distance from Earth to Sun in all cells from human body
+- .small[ Human genome is big - ~3.2 billion base pairs ]
+- .small[ Chromosome structure and function is organized at multiple scales ]
+- .small[ At kilobase (kb) scale chromatin loops form regions that are highly self-interacting called Topologically Associated Domains (TADs) ]
 
-.center[&lt;img src="img/genome_folding.png" width = 700&gt;]
+.center[&lt;img src="img/3d_chromatin.png" width = 700&gt;]
 ---
 
 ## Chromosome conformation capture technologies
@@ -64,139 +59,131 @@ The core strategy in 3D genome mapping is nuclear **proximity ligation** (Cullen
 .small[ Lieberman-Aiden, Erez, Nynke L. van Berkum, Louise Williams, Maxim Imakaev, Tobias Ragoczy, Agnes Telling, Ido Amit, et al. “[Comprehensive Mapping of Long-Range Interactions Reveals Folding Principles of the Human Genome](https://doi.org/10.1126/science.1181369).” Science, 2009 ]
 ---
 
-## Hi-C Data as a matrix
+##Hi-C data as a matrix
 
 .pull-left[
-- The genome (chromosome) is split into equally sized regions
-- Data is represented by a symmetric matrix of contacts `\(C_{ij}\)` where entry `\(ij\)` corresponds to the number of times region `\(i\)` comes into contact with region `\(j\)`
-- Off-diagonal data view - increasing **distance** between interacting regions
+- The genome (chromosome) is split into equally sized regions controlled by sequencing depth (resolution)
+- Data is represented by a symmetric matrix of contacts `\(C_{ij}\)` where entry `\(ij\)` corresponds to the number of times region `\(i\)` comes into contact with region `\(j\)` (interaction frequency)
 - Power-law decay of interactions with increasing **distance**
 ]
 
 .pull-right[
-&lt;img src="img/hicmatrix.png" width = 450&gt;
+&lt;img src="img/contact_matrix.png" width = 450&gt;
 ]
 
 ---
 
-## Biases in Hi-C data
-
-- Hi-C data suffers from many biases: **sequence-driven** (e.g., mappability, CG content) &amp; **technology-driven** (e.g., type of restriction enzyme, sequencing platform)
-
-- Most normalization methods work only on individual Hi-C dataset, one at a time
-
-- Individual normalization methods do not perform well when the goal is comparison
-
-.small[Lyu, Hongqiang, Erhu Liu, and Zhifang Wu. “[Comparison of Normalization Methods for Hi-C Data](https://europepmc.org/article/med/31588782).” BioTechniques 68, no. 2 (2020)
-
-Zheng, Ye, Peigen Zhou, and Sündüz Keleş. “[FreeHi-C Spike-in Simulations for Benchmarking Differential Chromatin Interaction Detection](https://doi.org/10.1016/j.ymeth.2020.07.001).” Methods, July 2020]
----
-
-## Joint Normalization on the MD plot
+## TAD-calling
 
 .pull-left[
-- **MD plot** represents data from two Hi-C matrices on one plot
-
-- Similar to the MA plot (Bland-Altman plot)
-
-- Y-axis: **M**ean differences in interaction frequencies = log2(IF2/IF1)
-
-- X-axis: Genomic **D**istance
+- “TAD-callers” have been proposed to identify the start and end coordinates of TAD boundaries
+- Heavily reliant on Hi-C data “resolution”
+- Ignore the fundamental role of functional genomic data (ChIP-seq data) in chromatin folding
 ]
 
 .pull-right[
-&lt;img src="img/mdplot.png" width = 400&gt;
+&lt;img src="img/TAD_detection.png" width = 650&gt;
 ]
----
-
-## Joint Loess Normalization of Hi-C Data
-
-.center[&lt;img src="img/normalization_loess.png" width = 580&gt;]
-
-.small[Lyu, Hongqiang, Erhu Liu, and Zhifang Wu. “[Comparison of Normalization Methods for Hi-C Data](https://europepmc.org/article/med/31588782).” BioTechniques, 2020]
 
 ---
 
-## Cyclic loess normalization of multiple Hi-C datasets
+## Why study TADs?
 
-Cyclic loess (Ballman et al. 2004) - take each pair of datasets, normalize, repeat until convergence
+- TADs are stable and dynamic structures 
+  + Highly conserved across species and cell lines
+  + Associated with gene regulation
 
-1. Choose two out of the N total samples then generate an MD plot
-2. Fit a loess curve f(d) to the MD plot
-3. Subtract f(d)/2 from the first dataset and add f(d)/2 to the second
-4. Repeat until all unique pairs have been compared
-5. Repeat until convergence
+- Disruption of the boundaries that demarcate TADs has been shown to lead to rare diseases and even cancer
 
-.small[Ballman, Karla V., Diane E. Grill, Ann L. Oberg, and Terry M. Therneau. “[Faster Cyclic Loess: Normalizing RNA Arrays via Linear Models](https://doi.org/10.1093/bioinformatics/bth327).” Bioinformatics (Oxford, England) 20, no. 16 (November 1, 2004)]
----
+- Understanding the mechanisms through which TADs are formed remains a top priority in our goal to fully understand the functionality of the human genome
 
-## Distance-centric chromatin interaction difference detection 
-
-.center[&lt;img src="img/multiHiCcompare_glm.png" width = 1100&gt;]
-
-.small[Zheng, Ye, Peigen Zhou, and Sündüz Keleş. “[FreeHi-C Spike-in Simulations for Benchmarking Differential Chromatin Interaction Detection](https://doi.org/10.1016/j.ymeth.2020.07.001).” Methods, 2020]
+- Can we leverage functional genomic elements in order to more precisely identify TAD boundaries?
 
 ---
 
-## Distance-centric chromatin interaction difference detection 
+## Turning TAD calling into a supervised ML framework
 
-- **Exact test**
-    - For comparing 2 groups without other covariates
-    - Similar to Fisher's exact test
+.pull-left[ 
+- Defining a resolution-specific response vector Y by shifted binning 
+]
 
-- **GLM Methods**
-    - For more complex experiments utilize the GLM framework
-    - The vector of covariates `\(x_i\)` can be linked with  `\(\mu_{dgj}\)` through a log-linear model `\(log(\mu_{dgj}) = x_i^T\beta_{dg} + log(M_{dj})\)`
-
-- Implemented in [edgeR](https://bioconductor.org/packages/edgeR/) R package
+.pull-right[
+&lt;img src="img/response_vector.png" width = 650&gt;
+]
 
 ---
 
-## Interpretation of differentially interacting chromatin regions (DIRs)
+## Turning TAD calling into a supervised ML framework
 
-- **Visualization of DIRs.** A Manhattan-like plot of DIRs may inform us about abnormalities or reveal chromosome site-specific enrichment of differentially interacting regions
+.pull-left[ 
+- Defining the feature space `\(\textbf{X} = \{X_1, X_2, \cdots, X_p \}\)`
+]
 
-- **Overlap between differentially expressed genes and DIRs.** If gene expression measurements are available, differentially expressed genes may be tested for overlap with DIRs - test the link between DIRs and changed gene expression
+.pull-right[
+&lt;img src="img/feature_space.png" width = 650&gt;
+]
 
-- **Functional enrichment of genes overlapping DIRs.** DIRs may disrupt specific pathways/functions - test whether genes overlapping DIRs are enriched in a canonical pathway or share a common function
 ---
 
-## Interpretation of differentially interacting chromatin regions (DIRs)
+## Establishing the Machine Learning Framework
 
-- **Overlap enrichment between TAD boundaries and DIRs.** DIRs may correspond to TAD boundaries that are deleted or created - test DIRs for significant overlap with TAD boundaries detected in either condition or only in boundaries changed between the conditions
+.center[&lt;img src="img/ml_framework.png" width = 600&gt;]
 
-- **Overlap between DIRs and binding sites.** DIRs may correspond to locations where proteins bind with DNA, such as CTCF sites - test for overlap between binding site locations and DIRs.
+---
+
+## Precisely predicting TAD boundaries at base-level resolution using *preciseTAD*
+
+What it does…
+  + Leverages a predictive model in conjunction with:
+  
+    - Density-based spatial clustering of applications with noise (DBSCAN)
+    - Partitioning around mediods (PAM)
+    
+  to precisely predict the most biologically meaningful chromosome-specific TAD boundaries
+
+---
+
+## Psuedocode
+
+.center[&lt;img src="img/psuedocode.png" width = 450&gt;]
+
+---
+
+## Evaluating precision of boundary prediction
+
+- Enriched heatmaps
+
+- Signal profile plots
+
+- Distance to nearest ChIP-seq peak region
+
+- Venn diagrams/Jaccard indices
+
 ---
 
 ## Summary
 
-- **Distance-centric view** of Hi-C data is critical (`MD plot`)
+- TAD boundary prediction is a multi-faceted problem
 
-- **Joint loess normalization** effectively removes between-dataset biases (`HiCcompare`, https://bioconductor.org/packages/HiCcompare/)
+- Current TAD-callers focus more on computational efficiency and less on precision
 
-- **Differential analysis considering distance** has optimal performance (`multiHiCcompare`, https://bioconductor.org/packages/multiHiCcompare/)
+- preciseTAD leverages an RF to more precisely predicts the location of TAD boundaries compared to conventional TAD-callers
 
 .small[
-- Stansfield, John C., Kellen G. Cresswell, Vladimir I. Vladimirov, and Mikhail G. Dozmorov. “[HiCcompare: An R-Package for Joint Normalization and Comparison of HI-C Datasets](https://doi.org/10.1186/s12859-018-2288-x).” BMC Bioinformatics (December 2018)
-
-- Stansfield, John C, Kellen G Cresswell, and Mikhail G Dozmorov. “[MultiHiCcompare: Joint Normalization and Comparative Analysis of Complex Hi-C Experiments](https://doi.org/10.1093/bioinformatics/btz048).” Bioinformatics, January 22, 2019
+Spiro C. Stilianoudakis, and Mikhail G. Dozmorov. “[preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution](https://doi.org/10.1101/2020.09.03.282186).” 
 ]
 
 ---
 
-## HiCcompareWorkshop resources
+## preciseTADworkshop resources
 
-- These slides: [https://mdozmorov.github.io/Talk_HiCcompare](https://mdozmorov.github.io/Talk_HiCcompare)
+- [The slides](???)
 
-- GitHub repo: [https://github.com/mdozmorov/HiCcompareWorkshop](https://github.com/mdozmorov/HiCcompareWorkshop)
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
 
-- Docker image: [https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop](https://hub.docker.com/repository/docker/mdozmorov/hiccompareworkshop)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
 
-- Pkgdown website: [https://mdozmorov.github.io/HiCcompareWorkshop/](https://mdozmorov.github.io/HiCcompareWorkshop/)
-
-.center[Get in touch on Twitter [@mikhaildozmorov](https://twitter.com/mikhaildozmorov) &lt;br&gt; or by e-mail `mdozmorov at vcu dot edu`]
-
-.small[ This research was supported by the American Cancer Society [IRG-14-192-40] and the National Institute of Environmental Health Sciences of the National Institutes of Health [T32ES007334] ]
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
