@@ -3,7 +3,7 @@ title: "preciseTAD: A machine learning framework for precise 3D domain boundary 
 subtitle: "#EuroBioc2020 workshop"
 author: "Spiro Stilianoudakis, MA, Mikhail Dozmorov, PhD"
 institute: "Virginia Commonwealth University"
-date: "December 6th, 2020"
+date: "December 16th, 2020"
 output:
   xaringan::moon_reader:
     lib_dir: libs
