@@ -31,13 +31,13 @@ class: center, middle, inverse, title-slide
 
 ## preciseTADworkshop resources
 
-- [The slides](https://stilianoudakis.github.io/slides_preciseTADworkshop/#1)
+- [The slides](https://stilianoudakis.github.io/slides_preciseTADworkshop/#1): https://stilianoudakis.github.io/slides_preciseTADworkshop/#1
 
-- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop): https://github.com/dozmorovlab/preciseTADworkshop
 
-- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop): https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop
 
-- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/): https://dozmorovlab.github.io/preciseTADworkshop/
 
 ---
 
@@ -50,20 +50,27 @@ class: center, middle, inverse, title-slide
 .center[&lt;img src="img/3d_chromatin.png" width = 700&gt;]
 ---
 
-## Chromosome conformation capture technologies
+## Why study TADs?
 
-The core strategy in 3D genome mapping is nuclear **proximity ligation** (Cullen et al., 1993), which allows detection of distant genomic segments residing in close spatial proximity to one another, yet are linearly far away.
+- TADs are stable and dynamic structures 
+  + Highly conserved across species and cell lines
+  + Associated with gene regulation
 
-.center[&lt;img src="img/proximity_ligation.png" width = 650&gt;]
+- Disruption of the boundaries that demarcate TADs has been shown to lead to rare diseases and even cancer
 
-.small[ Lieberman-Aiden, Erez, Nynke L. van Berkum, Louise Williams, Maxim Imakaev, Tobias Ragoczy, Agnes Telling, Ido Amit, et al. “[Comprehensive Mapping of Long-Range Interactions Reveals Folding Principles of the Human Genome](https://doi.org/10.1126/science.1181369).” Science, 2009 ]
+- Understanding the mechanisms through which TADs are formed remains a top priority in our goal to fully understand the functionality of the human genome
+
+&lt;!--- Can we leverage functional genomic elements in order to more precisely identify TAD boundaries?--&gt;
+
 ---
 
 ##Hi-C data as a matrix
 
 .pull-left[
 - The genome (chromosome) is split into equally sized regions controlled by sequencing depth (resolution)
+
 - Data is represented by a symmetric matrix of contacts `\(C_{ij}\)` where entry `\(ij\)` corresponds to the number of times region `\(i\)` comes into contact with region `\(j\)` (interaction frequency)
+
 - Power-law decay of interactions with increasing **distance**
 ]
 
@@ -77,27 +84,17 @@ The core strategy in 3D genome mapping is nuclear **proximity ligation** (Cullen
 
 .pull-left[
 - “TAD-callers” have been proposed to identify the start and end coordinates of TAD boundaries
+
 - Heavily reliant on Hi-C data “resolution”
-- Ignore the fundamental role of functional genomic data (ChIP-seq data) in chromatin folding
+
+- Ignore the fundamental role of functional genomic data (ChIP-seq data) in chromatin folding 
+
+- Our aim: Can we leverage functional genomic elements in order to more precisely identify TAD boundaries?
 ]
 
 .pull-right[
 &lt;img src="img/TAD_detection.png" width = 650&gt;
 ]
-
----
-
-## Why study TADs?
-
-- TADs are stable and dynamic structures 
-  + Highly conserved across species and cell lines
-  + Associated with gene regulation
-
-- Disruption of the boundaries that demarcate TADs has been shown to lead to rare diseases and even cancer
-
-- Understanding the mechanisms through which TADs are formed remains a top priority in our goal to fully understand the functionality of the human genome
-
-- Can we leverage functional genomic elements in order to more precisely identify TAD boundaries?
 
 ---
 
@@ -122,12 +119,6 @@ The core strategy in 3D genome mapping is nuclear **proximity ligation** (Cullen
 .pull-right[
 &lt;img src="img/feature_space.png" width = 650&gt;
 ]
-
----
-
-## Establishing the Machine Learning Framework
-
-.center[&lt;img src="img/ml_framework.png" width = 600&gt;]
 
 ---
 
@@ -161,29 +152,15 @@ What it does…
 
 ---
 
-## Summary
-
-- TAD boundary prediction is a multi-faceted problem
-
-- Current TAD-callers focus more on computational efficiency and less on precision
-
-- preciseTAD leverages an RF to more precisely predicts the location of TAD boundaries compared to conventional TAD-callers
-
-.small[
-Spiro C. Stilianoudakis, and Mikhail G. Dozmorov. “[preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution](https://doi.org/10.1101/2020.09.03.282186).” 
-]
-
----
-
 ## preciseTADworkshop resources
 
-- [The slides](https://stilianoudakis.github.io/slides_preciseTADworkshop/#1)
+- [The slides](https://stilianoudakis.github.io/slides_preciseTADworkshop/#1): https://stilianoudakis.github.io/slides_preciseTADworkshop/#1
 
-- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop)
+- [Github repo](https://github.com/dozmorovlab/preciseTADworkshop): https://github.com/dozmorovlab/preciseTADworkshop
 
-- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop)
+- [Docker image](https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop): https://hub.docker.com/repository/docker/stilianoudakis/precisetadworkshop
 
-- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/)
+- [Pkgdown website](https://dozmorovlab.github.io/preciseTADworkshop/): https://dozmorovlab.github.io/preciseTADworkshop/
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
