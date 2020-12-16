@@ -1,7 +1,7 @@
 ---
 title: "preciseTAD: A machine learning framework for precise 3D domain boundary prediction at base-level resolution"
 subtitle: "#EuroBioc2020 workshop"
-author: "Spiro Stilianoudakis, MA, Mikhail Dozmorov, PhD"
+author: "Spiro Stilianoudakis, PhD Candidate; Mikhail Dozmorov, PhD"
 institute: "Virginia Commonwealth University"
 date: "December 16th, 2020"
 output:
@@ -129,19 +129,17 @@ mono_light(
 
 ## Precisely predicting TAD boundaries at base-level resolution using *preciseTAD*
 
+.pull-left[
 What it does…
   + Leverages a predictive model in conjunction with:
   
     - Density-based spatial clustering of applications with noise (DBSCAN)
     - Partitioning around mediods (PAM)
     
-  to precisely predict the most biologically meaningful chromosome-specific TAD boundaries
+  to precisely predict the most biologically meaningful domain boundaries
+]
 
----
-
-## Psuedocode
-
-.center[<img src="img/psuedocode.png" width = 450>]
+.pull-right[<img src="img/psuedocode.png" width = 500>]
 
 ---
 
